@@ -54,7 +54,31 @@ const inscripcionModel = {
       throw error;
     }
   },
-
+  findCursosByUsuario: async (usuarioId) => {
+    try {
+      if (!usuarioId) {
+        throw new Error("El usuarioId es requerido");
+      }
+  
+      console.log("Buscando inscripciones a cursos para el usuario con ID:", usuarioId);
+  
+      const [rows] = await pool.query(
+        `
+        SELECT i.*, c.titulo as curso_titulo, c.nivel, c.precio, c.instructor_id
+        FROM inscripciones_cursos i
+        JOIN cursos c ON i.curso_id = c.id
+        WHERE i.usuario_id = ?
+        ORDER BY i.fecha_inscripcion DESC
+        `,
+        [usuarioId]
+      );
+  
+      return rows;
+    } catch (error) {
+      console.error("Error al buscar inscripciones a cursos por usuario:", error.message || error);
+      throw error;
+    }
+  },
   // Buscar inscripción por ID (general)
   findById: async (id) => {
     try {

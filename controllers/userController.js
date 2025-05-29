@@ -24,7 +24,7 @@ const userController = {
       const { id } = req.params
 
       // Verificar permisos (solo admin o el propio usuario)
-      if (req.user.rol !== "admin" && req.user.id !== Number.parseInt(id) || req.user.rol !== "instructor") {
+      if (req.user.rol !== "admin" && req.user.id !== Number.parseInt(id)) {
         return res.status(403).json({ message: "No tienes permisos para realizar esta acción" })
       }
 

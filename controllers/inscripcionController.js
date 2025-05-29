@@ -78,7 +78,7 @@ const inscripcionController = {
       const usuario_id = req.user.id; // Usuario autenticado
   
       // Verificar si el curso existe
-      const curso = await cursoModel.getById(curso_id); // Cambiado a getById
+      const curso = await cursoModel.getById(curso_id);
       if (!curso) {
         return res.status(404).json({ message: "Curso no encontrado" });
       }
@@ -87,9 +87,9 @@ const inscripcionController = {
       const inscripciones = await inscripcionModel.findCursosByUsuario(usuario_id);
       const yaInscrito = inscripciones.some(
         (inscripcion) =>
-          inscripcion.evento_id === Number(evento_id) &&
+          inscripcion.curso_id === Number(curso_id) &&
           inscripcion.estado !== "cancelada" &&
-          inscripcion.estado !== "rechazada" // Permitir reinscripción si está rechazada
+          inscripcion.estado !== "rechazada" // Permitir reinscripción si está rechazada o cancelada
       );
   
       if (yaInscrito) {
