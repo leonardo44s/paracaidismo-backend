@@ -22,13 +22,7 @@ const PORT = process.env.PORT || 3001
 // Middleware
 const cors = require('cors');
 
-app.use(cors({
-  origin: [
-    'https://paracaidismo-frontend-94c4.vercel.app',
-    'http://localhost:3000' // para desarrollo
-  ],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json())
 app.use(morgan("dev"))
 
